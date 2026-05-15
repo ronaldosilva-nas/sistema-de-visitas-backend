@@ -26,6 +26,7 @@ public class MembroMapper {
 
         return MembroResponseDTO.builder()
             .id(membro.getId())
+            .nome(membro.getNome())
             .telefone(membro.getTelefone())
             .endereco(membro.getEndereco())
             .numero(membro.getNumero())
