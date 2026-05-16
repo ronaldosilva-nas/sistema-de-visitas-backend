@@ -15,6 +15,8 @@ import com.igreja.visitas.dto.MembroRequestDTO;
 import com.igreja.visitas.dto.MembroResponseDTO;
 import com.igreja.visitas.service.MembroService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/membros")
@@ -27,7 +29,7 @@ public class MembroController {
     }
 
     @PostMapping
-    public MembroResponseDTO criaMembro(@RequestBody MembroRequestDTO dto) {
+    public MembroResponseDTO criaMembro(@Valid @RequestBody MembroRequestDTO dto) {
         return membroService.salvar(dto);
     }
 
@@ -47,7 +49,7 @@ public class MembroController {
     }
 
     @PutMapping("/{id}")
-    public MembroResponseDTO atualizar(@PathVariable Long id, @RequestBody MembroRequestDTO dto) {
+    public MembroResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody MembroRequestDTO dto) {
         return membroService.atualizar(id, dto);
     }
 }
