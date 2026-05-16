@@ -29,8 +29,10 @@ public class MembroService {
         return response;
     }
 
-    public List<Membro> buscarTodos() {
-        return membroRepository.findAll();
+    public List<MembroResponseDTO> buscarTodos() {
+        List<Membro> membros = membroRepository.findAll();
+        List<MembroResponseDTO> response = membros.stream().map(m -> membroMapper.toResponseDTO(m)).toList();
+        return response;
     }
 
     public MembroResponseDTO getMembroById(Long id) {

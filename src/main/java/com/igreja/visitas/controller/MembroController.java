@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.igreja.visitas.dto.MembroRequestDTO;
 import com.igreja.visitas.dto.MembroResponseDTO;
-import com.igreja.visitas.model.Membro;
 import com.igreja.visitas.service.MembroService;
 
 
@@ -33,7 +32,7 @@ public class MembroController {
     }
 
     @GetMapping
-    public List<Membro> listarMembros() {
+    public List<MembroResponseDTO> listarMembros() {
         return membroService.buscarTodos();
     }
 
