@@ -14,21 +14,21 @@ import lombok.Setter;
 @Builder
 public class MembroRequestDTO {
 
-    @NotBlank(message = "Nome é obrigatório.")
+    @NotBlank(message = "Campo nome é obrigatório.")
     private String nome;
 
-    @NotBlank(message = "Telefone é obrigatório.")
+    @NotBlank(message = "Campo telefone é obrigatório.")
     private String telefone;
 
-    @NotBlank(message = "Endereço é obrigatório.")
+    @NotBlank(message = "Campo endereço é obrigatório.")
     private String endereco;
 
-    private int numero;
+    private Integer numero;
 
-    @NotBlank(message = "Bairro é obrigatório.")
+    @NotBlank(message = "Campo bairro é obrigatório.")
     private String bairro;
 
-    @NotBlank(message = "Cidade é obrigatório.")
+    @NotBlank(message = "Campo cidade é obrigatório.")
     private String cidade;
     
     private String observacao;

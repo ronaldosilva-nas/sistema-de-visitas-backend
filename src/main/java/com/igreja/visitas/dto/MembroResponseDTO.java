@@ -23,7 +23,7 @@ public class MembroResponseDTO {
 
     private String endereco;
 
-    private int numero;
+    private Integer numero;
 
     private String bairro;
 

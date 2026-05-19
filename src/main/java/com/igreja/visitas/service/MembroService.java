@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.igreja.visitas.dto.MembroRequestDTO;
 import com.igreja.visitas.dto.MembroResponseDTO;
+import com.igreja.visitas.exceptions.MembroNotFoundException;
 import com.igreja.visitas.mapper.MembroMapper;
 import com.igreja.visitas.model.Membro;
 import com.igreja.visitas.repository.MembroRepository;
@@ -36,20 +37,20 @@ public class MembroService {
     }
 
     public MembroResponseDTO getMembroById(Long id) {
-        Membro membro = membroRepository.findById(id).orElseThrow(() -> new RuntimeException("Membro não encontrado"));
+        Membro membro = membroRepository.findById(id).orElseThrow(() -> new MembroNotFoundException("Membro não encontrado"));
         MembroResponseDTO response = membroMapper.toResponseDTO(membro);
         return response;
     }
 
     public void deletar(Long id) {
         if(!membroRepository.existsById(id)) {
-            throw new RuntimeException("Membro não encontrado");
+            throw new MembroNotFoundException("Membro não encontrado");
         }
         membroRepository.deleteById(id);
     }
 
     public MembroResponseDTO atualizar(Long id, MembroRequestDTO dto) {
-        Membro existente = membroRepository.findById(id).orElseThrow(() -> new RuntimeException("Membro não encontrado"));
+        Membro existente = membroRepository.findById(id).orElseThrow(() -> new MembroNotFoundException("Membro não encontrado"));
         membroMapper.updateEntity(dto, existente);
         Membro atualizado = membroRepository.save(existente);
         MembroResponseDTO response = membroMapper.toResponseDTO(atualizado);
