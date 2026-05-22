@@ -2,6 +2,8 @@ package com.igreja.visitas.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +36,19 @@ public class MembroController {
 
     @Operation(summary = "Criar membro", description = "Adicionar um novo membro no sistema")
     @PostMapping
-    public MembroResponseDTO criaMembro(@Valid @RequestBody MembroRequestDTO dto) {
-        return membroService.salvar(dto);
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Erro de validação")
+    })
+    public ResponseEntity<MembroResponseDTO> criaMembro(@Valid @RequestBody MembroRequestDTO dto) {
+        MembroResponseDTO novo =  membroService.salvar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novo);
+    
     }
 
     @Operation(summary = "Listar membros", description = "Retorna todos os membros cadastrados")
     @GetMapping
+    @ApiResponse(responseCode = "200", description = "Membros listados com sucesso")
     public List<MembroResponseDTO> listarMembros() {
         return membroService.buscarTodos();
     }
@@ -56,12 +65,22 @@ public class MembroController {
 
     @Operation(summary = "Deletar membro", description = "Deleta um membro específico por ID")
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Membro deletado"),
+        @ApiResponse(responseCode = "404", description = "Membro não encontrado")
+    })
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         membroService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Atualizar membro", description = "Atualiza os dados de um membro pelo ID informado")
     @PutMapping("/{id}")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Membro atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Erro de validação"),
+        @ApiResponse(responseCode = "404", description = "Membro não encontrado")
+    })
     public MembroResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody MembroRequestDTO dto) {
         return membroService.atualizar(id, dto);
     }
