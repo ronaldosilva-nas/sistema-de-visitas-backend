@@ -1,7 +1,7 @@
 package com.igreja.visitas.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.igreja.visitas.dto.MembroRequestDTO;
@@ -30,10 +30,14 @@ public class MembroService {
         return response;
     }
 
-    public List<MembroResponseDTO> buscarTodos() {
-        List<Membro> membros = membroRepository.findAll();
+    public Page<MembroResponseDTO> buscarTodos(Pageable pageable) {
+        Page<Membro> membros = membroRepository.findAll(pageable);
+        return membros.map(membro -> membroMapper.toResponseDTO(membro));
+        
+        //com lista retornando List<MembroResponseDTO>
+        /*List<Membro> membros = membroRepository.findAll();
         List<MembroResponseDTO> response = membros.stream().map(m -> membroMapper.toResponseDTO(m)).toList();
-        return response;
+        return response;*/
     }
 
     public MembroResponseDTO getMembroById(Long id) {

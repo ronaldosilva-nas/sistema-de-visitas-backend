@@ -1,7 +1,10 @@
 package com.igreja.visitas.controller;
 
-import java.util.List;
-
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,8 +52,11 @@ public class MembroController {
     @Operation(summary = "Listar membros", description = "Retorna todos os membros cadastrados")
     @GetMapping
     @ApiResponse(responseCode = "200", description = "Membros listados com sucesso")
-    public List<MembroResponseDTO> listarMembros() {
-        return membroService.buscarTodos();
+    public Page<MembroResponseDTO> listarMembros(
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC)
+            @ParameterObject Pageable pageable) {
+                
+        return membroService.buscarTodos(pageable);
     }
 
     @Operation(summary = "Buscar membro por ID", description = "Retorna um membro específico por ID")
